@@ -15,8 +15,14 @@
   "type": "module",
   "exports": {
     ".": {
-      "import": "./dist/index.js",
-      "default": "./dist/index.cjs"
+      "import": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.js"
+      },
+      "require": {
+        "types": "./dist/index.d.cts",
+        "default": "./dist/index.cjs"
+      }
     }
   },
   "main": "dist/index.cjs",
@@ -26,17 +32,21 @@
     "dist/**"
   ],
   "scripts": {
-    "build": "tsup && tsup --dts-only --format esm",
+    "build": "tsup",
+    "ci:publish": "changeset publish",
+    "clean": "git clean -dfx node_modules dist .tsbuildinfo",
+    "dev": "tsup --watch",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "lint": "pnpm typecheck && eslint .",
     "lint:fix": "eslint --fix .",
-    "prepublishOnly": "pnpm test && pnpm lint && pnpm format:check && pnpm build",
+    "prepublishOnly": "pnpm build && pnpm lint && pnpm format:check && pnpm test",
     "test": "mocha \"**/*.test.ts\"",
     "typecheck": "tsc --noEmit"
   },
   "prettier": "@shahrad/prettier-config",
   "devDependencies": {
+    "@changesets/cli": "^2.31.1",
     "@shahrad/eslint-config": "^1.0.0",
     "@shahrad/prettier-config": "^1.2.2",
     "@sindresorhus/tsconfig": "^7.0.0",
@@ -50,7 +60,7 @@
     "tsx": "^4.19.3",
     "typescript": "^5.8.2"
   },
-  "packageManager": "pnpm@9.15.9",
+  "packageManager": "pnpm@10.34.9+sha512.f49b5a8ea0fdedb44bb3c0c1d6575092a53c2950d95b7ad15df11f17974877a2de3a01c07e934e9b28ce716e51c09a94962c7306d09be2e1e4b18a8c8762fd32",
   "publishConfig": {
     "access": "public",
     "provenance": true
