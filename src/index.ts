@@ -5,13 +5,11 @@ import type { IndexedRange, Range, RangeArray, RangeParserOptions } from './typi
 function combineRanges(ranges: RangeArray): RangeArray {
   // Map ranges to include original index, then sort by start position
   const ordered = ranges
-    .map(
-      (range, index): IndexedRange => ({
-        start: range.start,
-        end: range.end,
-        index,
-      })
-    )
+    .map((range, index): IndexedRange => ({
+      start: range.start,
+      end: range.end,
+      index,
+    }))
     .sort(sortByRangeStart);
 
   let j = 0,
@@ -36,12 +34,10 @@ function combineRanges(ranges: RangeArray): RangeArray {
   ordered.length = j + 1;
 
   // Restore original order based on index and remove the index property
-  const combined = ordered.sort(sortByRangeIndex).map(
-    (range): Range => ({
-      start: range.start,
-      end: range.end,
-    })
-  ) as RangeArray;
+  const combined = ordered.sort(sortByRangeIndex).map((range): Range => ({
+    start: range.start,
+    end: range.end,
+  })) as RangeArray;
 
   // Copy range type
   combined.type = ranges.type;
