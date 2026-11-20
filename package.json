@@ -32,6 +32,7 @@
     "dist/**"
   ],
   "scripts": {
+    "bench": "vitest bench --run",
     "build": "tsup",
     "ci:publish": "changeset publish",
     "clean": "git clean -dfx node_modules dist .tsbuildinfo",
